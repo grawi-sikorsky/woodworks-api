@@ -29,7 +29,6 @@ spring:
   session:
     jdbc:
       initialize-schema: always
-    store-type: jdbc
   banner:
     location: banner/banner.txt
   flyway:
@@ -43,12 +42,8 @@ spring:
         registration:
           google:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
-#            client-secret: ${OA_STAG_GOOGLE_SECRET}
             client-secret: ${OA_DEV_GOOGLE_SECRET}
-            scope:
-              - openid
-              - profile
-              - email
+            scope: openid, profile, email
           github:
             client-id: Ov23lik9cjhHMKAav4EJ
             client-secret: ${OA_STAG_GITHUB_SECRET}

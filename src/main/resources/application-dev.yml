@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:postgresql://192.168.0.6:5432/woodworks
     username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    password: ${DB_PASS}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -31,7 +31,6 @@ spring:
   session:
     jdbc:
       initialize-schema: always
-#    store-type: jdbc
   banner:
     location: banner/banner.txt
   flyway:
@@ -46,21 +45,8 @@ spring:
           google:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
             client-secret: ${OA_DEV_GOOGLE_SECRET}
-            scope:
-              - openid
-              - profile
-              - email
+            scope: openid, profile, email
           github:
             client-id: Ov23liZsTURzJNQnilDz
             client-secret: ${OA_DEV_GITHUB_SECRET}
             scope: read:user
-#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-#            authorization-grant-type: authorization_code
-#            client-authentication-method: post
-#            provider: github
-#        provider:
-#          github:
-#            authorization-uri: https://github.com/login/oauth/authorize
-#            token-uri: https://github.com/login/oauth/access_token
-#            user-info-uri: https://api.github.com/user
-#            user-name-attribute: login
