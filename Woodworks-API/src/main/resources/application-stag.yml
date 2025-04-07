@@ -6,12 +6,12 @@ spring:
   config:
     activate:
       on-profile: stag
-  docker:
-    compose:
-      enabled: true
-      file: docker/woodworks-stag/compose.yml
+
   datasource:
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.0.6:5432/woodworks
+    username: ${DB_USER_STAG}
+    password: ${DB_PASSWORD_STAG}
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:

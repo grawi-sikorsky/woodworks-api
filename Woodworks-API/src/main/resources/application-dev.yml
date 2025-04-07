@@ -6,13 +6,12 @@ spring:
   config:
     activate:
       on-profile: dev
-  docker:
-    compose:
-      enabled: true
-      file: docker/woodworks-dev/compose.yml
 
   datasource:
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.0.6:5432/woodworks
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
