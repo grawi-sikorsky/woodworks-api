@@ -13,12 +13,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/public", "/css/**", "/js/**").permitAll()
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/public", "/login","/logout", "/css/**", "/js/**").permitAll()
                                                .anyRequest().authenticated()
                                   )
-            .oauth2Login(Customizer.withDefaults())
-            .formLogin(Customizer.withDefaults())
-            .logout(logout -> logout.logoutSuccessUrl("/")
+            .oauth2Login(form -> {})
+            .formLogin(form -> {})
+            .logout(logout -> logout.logoutSuccessUrl("/public")
                                     .invalidateHttpSession(true)
                                     .clearAuthentication(true)
                                     .deleteCookies("JSESSIONID"));

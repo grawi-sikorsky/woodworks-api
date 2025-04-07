@@ -10,6 +10,11 @@ import java.util.Map;
 @RestController
 public class TestController {
 
+    @GetMapping("/")
+    public String publicHomeEndpoint() {
+        return "To jest HOME endpoint.";
+    }
+
     @GetMapping("/public")
     public String publicEndpoint() {
         return "To jest publiczny endpoint.";
