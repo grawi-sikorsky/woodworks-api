@@ -65,6 +65,6 @@ jobs:
           script: |
             docker run -d --restart unless-stopped --name woodworks-api -p 6666:80 \
               -e SPRING_PROFILES_ACTIVE=stag \
-              -e DB_USER=${{ secrets.DB_USER }} \
-              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_USER=${{ secrets.DB_USER_STAG }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASS_STAG }} \
               chodzi/woodworks-api:latest
