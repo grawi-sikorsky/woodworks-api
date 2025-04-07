@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("/test")
-    public String testMethod() {
-        return "Testy";
+    @GetMapping("/public")
+    public String publicEndpoint() {
+        return "To jest publiczny endpoint.";
+    }
+
+    @GetMapping("/secure")
+    public String secureEndpoint() {
+        return "To jest prywatny endpojnt";
     }
 }

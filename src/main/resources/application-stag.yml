@@ -36,3 +36,18 @@ spring:
     enabled: true
     baseline-on-migrate: true
     table: flyway_schema_history
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: Ov23lik9cjhHMKAav4EJ
+            client-secret: ${OA_STAG_GOOGLE_SECRET}
+            scope:
+              - openid
+              - profile
+              - email
+          github:
+            client-id: Ov23lik9cjhHMKAav4EJ
+            client-secret: ${OA_STAG_GITHUB_SECRET}

@@ -67,4 +67,5 @@ jobs:
               -e SPRING_PROFILES_ACTIVE=stag \
               -e DB_USER=${{ secrets.DB_USER_STAG }} \
               -e DB_PASSWORD=${{ secrets.DB_PASS_STAG }} \
+              -e OA_GITHUB_SECRET=${{ secrets.OA_STAG_GITHUB_SECRET }} \
               chodzi/woodworks-api:latest
