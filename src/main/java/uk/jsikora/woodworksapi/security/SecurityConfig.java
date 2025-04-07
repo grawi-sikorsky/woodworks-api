@@ -1,4 +1,4 @@
-package security;
+package uk.jsikora.woodworksapi.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +14,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/", "/public", "/css/**", "/js/**").permitAll()
-                                               .anyRequest().authenticated())
+                                               .anyRequest().authenticated()
+                                  )
             .oauth2Login(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
-//            .logout(logout -> logout.logoutSuccessUrl("/")
-//                                    .invalidateHttpSession(true)
-//                                    .clearAuthentication(true)
-//                                    .deleteCookies("JSESSIONID")
-                   ;
+            .logout(logout -> logout.logoutSuccessUrl("/")
+                                    .invalidateHttpSession(true)
+                                    .clearAuthentication(true)
+                                    .deleteCookies("JSESSIONID"));
         return http.build();
     }
 }

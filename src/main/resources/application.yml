@@ -31,7 +31,7 @@ spring:
   session:
     jdbc:
       initialize-schema: always
-    store-type: jdbc
+#    store-type: jdbc
   banner:
     location: banner/banner.txt
   flyway:
