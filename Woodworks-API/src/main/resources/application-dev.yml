@@ -1,0 +1,39 @@
+logging:
+  level:
+    uk.jsikora: debug
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  docker:
+    compose:
+      enabled: true
+      file: docker/woodworks-dev/compose.yml
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 8000
+      org:
+        hibernate:
+          envers:
+            track_entities_changed_in_revision: true
+    show-sql: false
+
+  session:
+    jdbc:
+      initialize-schema: always
+    store-type: jdbc
+  banner:
+    location: banner/banner.txt
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    table: flyway_schema_history
