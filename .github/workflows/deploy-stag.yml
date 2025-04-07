@@ -63,7 +63,7 @@ jobs:
           username: ${{ secrets.SERVER_SSH_USER }}
           password: ${{ secrets.SERVER_SSH_PASS }}
           script: |
-            docker run -d --restart unless-stopped --name woodworks-api -p 6666:80 \
+            docker run -d --restart unless-stopped --name woodworks-api -p 9666:80 \
               -e SPRING_PROFILES_ACTIVE=stag \
               -e DB_USER=${{ secrets.DB_USER_STAG }} \
               -e DB_PASSWORD=${{ secrets.DB_PASS_STAG }} \
