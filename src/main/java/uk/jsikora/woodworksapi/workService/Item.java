@@ -8,4 +8,4 @@ package uk.jsikora.woodworksapi.workService;
  * @param thickness
  * @param material
  */
-public record Item(String name, int width, int height, int thickness, MaterialType material) {}
+public record Item(String name, int width, int height, int thickness, int count, MaterialType material) {}
