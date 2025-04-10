@@ -11,4 +11,6 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                int thickness,
                                int cabinCount) {
     }
+
+
 }
