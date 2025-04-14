@@ -49,4 +49,9 @@ spring:
           github:
             client-id: Ov23liZsTURzJNQnilDz
             client-secret: ${OA_DEV_GITHUB_SECRET}
-            scope: read:user
+            scope: read:user, user:email
+
+woodworks:
+  jwt:
+    secret: "superTajnyKluczDoJWTtokenowKtoryMaMin32Znaki"
+    expiration: 86400000

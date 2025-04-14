@@ -25,8 +25,4 @@ public class TestController {
         return "To jest prywatny endpojnt";
     }
 
-    @GetMapping("/me")
-    public Map<String, Object> me(@AuthenticationPrincipal OAuth2User user) {
-        return user.getAttributes();
-    }
 }
