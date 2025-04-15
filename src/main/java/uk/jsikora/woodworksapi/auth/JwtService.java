@@ -12,6 +12,8 @@ import uk.jsikora.woodworksapi.user.BaseUser;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -23,11 +25,12 @@ public class JwtService {
     @Value("${woodworks.jwt.expiration}")
     private long jwtExpirationMillis;
 
-    public String generateToken(BaseUser baseUser) {
+    public String generateToken(BaseUser baseUser, Map<String, Object> extraClaims) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMillis);
 
         return Jwts.builder()
+                   .setClaims(extraClaims)
                    .setSubject(baseUser.getEmail())
                    .claim("id", baseUser.getId())
                    .claim("name", baseUser.getName())
@@ -44,6 +47,16 @@ public class JwtService {
                    .parseClaimsJws(token)
                    .getBody()
                    .getSubject();
+    }
+
+    public String getProviderFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                            .setSigningKey(getSignKey())
+                            .build()
+                            .parseClaimsJws(token)
+                            .getBody();
+
+        return claims.get("provider").toString();
     }
 
     public boolean validateToken(String token) {

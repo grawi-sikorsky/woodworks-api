@@ -2,7 +2,7 @@ logging:
   level:
     uk.jsikora: debug
     org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
+#    org.springframework.security.oauth2: DEBUG
 
 spring:
   config:
@@ -50,8 +50,12 @@ spring:
             client-id: Ov23liZsTURzJNQnilDz
             client-secret: ${OA_DEV_GITHUB_SECRET}
             scope: read:user, user:email
+        provider:
+          google:
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
 
 woodworks:
   jwt:
     secret: "superTajnyKluczDoJWTtokenowKtoryMaMin32Znaki"
-    expiration: 86400000
+#    expiration: 86400000 # 1 day
+    expiration: 900000    # 15 min

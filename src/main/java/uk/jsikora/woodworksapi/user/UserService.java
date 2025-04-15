@@ -6,5 +6,7 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<BaseUser> findByEmail(String email);
-    BaseUser registerOAuthUser(String email, String name, AuthProvider provider);
+    Optional<BaseUser> findByEmailAndProvider(String email, AuthProvider provider);
+    Optional<BaseUser> findByProviderAndProviderId(AuthProvider provider, String providerId);
+    BaseUser registerOAuthUser(BaseUser baseUser);
 }

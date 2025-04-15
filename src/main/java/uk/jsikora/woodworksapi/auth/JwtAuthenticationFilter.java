@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -41,8 +40,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = authHeader.substring(7);
 
         String email;
+        AuthProvider provider;
         try {
             email = jwtService.getEmailFromToken(token);
+            provider = AuthProvider.fromString(jwtService.getProviderFromToken(token));
+
         } catch (Exception e) {
             filterChain.doFilter(request, response);
             return;
@@ -50,8 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext()
                                                   .getAuthentication() == null) {
-            Optional<BaseUser> user = userService.findByEmail(email);
-            if(user.isPresent() && jwtService.isTokenValid(token, user.get())){
+            Optional<BaseUser> user = userService.findByEmailAndProvider(email, provider);
+            if (user.isPresent() && jwtService.isTokenValid(token, user.get())) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext()

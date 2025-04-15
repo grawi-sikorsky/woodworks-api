@@ -40,7 +40,7 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .oauth2Login(oauth -> oauth.userInfoEndpoint(info -> info.userService(customOAuth2UserService))
                                        .successHandler(successHandler))
-            .logout(logout -> logout.logoutSuccessUrl("/public")
+            .logout(logout -> logout.logoutSuccessUrl("/login")
                                     .deleteCookies("JSESSIONID"));
 
         return http.build();

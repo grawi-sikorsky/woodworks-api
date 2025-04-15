@@ -20,17 +20,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseUser registerOAuthUser(String email, String name, AuthProvider provider) {
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalStateException("Użytkownik z tym adresem e-mail już istnieje.");
+    public Optional<BaseUser> findByEmailAndProvider(String email, AuthProvider provider) {
+        return userRepository.findByEmailAndProvider(email, provider);
+    }
+
+    public Optional<BaseUser> findByProviderAndProviderId(AuthProvider provider, String providerId) {
+        return userRepository.findByProviderAndProviderId(provider, providerId);
+    }
+
+    @Override
+    public BaseUser registerOAuthUser(BaseUser baseUser) {
+        if (userRepository.existsByEmailAndProvider(baseUser.getEmail(), baseUser.getProvider())) {
+            throw new IllegalStateException("Użytkownik z tym adresem e-mail i providerem OA2 już istnieje.");
         }
 
-        BaseUser baseUser = BaseUser.builder()
-                                    .email(email)
-                                    .name(name)
-                                    .provider(provider)
-                                    .build();
-
-        return userRepository.save(baseUser);
+        return userRepository.findByEmailAndProvider(baseUser.getEmail(), baseUser.getProvider())
+                                          .orElseGet(() -> {
+                                              BaseUser newBaseUser = new BaseUser();
+                                              newBaseUser.setEmail(baseUser.getEmail());
+                                              newBaseUser.setName(baseUser.getName());
+                                              newBaseUser.setImageUrl(baseUser.getImageUrl());
+                                              newBaseUser.setProvider(baseUser.getProvider());
+                                              newBaseUser.setProviderId(baseUser.getProviderId());
+                                              newBaseUser.setLogin(baseUser.getLogin());
+                                              return userRepository.save(newBaseUser);
+                                          });
     }
 }

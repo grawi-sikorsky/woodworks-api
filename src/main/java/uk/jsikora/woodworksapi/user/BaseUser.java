@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import uk.jsikora.woodworksapi.auth.AuthProvider;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @Entity
@@ -21,6 +23,8 @@ public class BaseUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private UUID uuid;
+
     private String email;
     private String name;
     private String imageUrl;
@@ -29,6 +33,8 @@ public class BaseUser {
     private AuthProvider provider;
 
     private String providerId;
+    private String login;
+    private String locale;
 
     public BaseUser() {
     }
