@@ -4,6 +4,9 @@ logging:
     org.springframework.security: DEBUG
 #    org.springframework.security.oauth2: DEBUG
 
+server:
+  port: 9666
+
 spring:
   config:
     activate:

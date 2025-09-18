@@ -2,9 +2,6 @@ logging:
   level:
     uk.jsikora: debug
 
-server:
-  port: 9666
-
 spring:
   application:
     name: Woodworks-API

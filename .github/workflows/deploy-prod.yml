@@ -1,4 +1,4 @@
-name: Deploy Woodworks STAG
+name: Deploy Woodworks PROD
 
 on:
   push:
