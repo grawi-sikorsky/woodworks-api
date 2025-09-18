@@ -8,7 +8,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: prod
 
   datasource:
     url: jdbc:postgresql://192.168.0.6:5432/woodworks
