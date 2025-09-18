@@ -30,6 +30,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final JwtService jwtService;
     private final UserServiceImpl userServiceImpl;
     private final UserRepository userRepository;
+    private final AuthProperties authProperties;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -89,7 +90,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String token = jwtService.generateToken(baseUser, extraClaims);
 
-        String redirectUrl = UriComponentsBuilder.fromUriString("http://localhost:4200/oauth2/redirect")
+        String redirectUrl = UriComponentsBuilder.fromUriString(authProperties.getOauthRedirectUri() + "/oauth2/redirect")
                                                  .queryParam("token", token)
                                                  .build()
                                                  .toUriString();

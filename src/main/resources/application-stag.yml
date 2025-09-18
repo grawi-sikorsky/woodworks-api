@@ -60,3 +60,6 @@ woodworks:
     secret: "superTajnyKluczDoJWTtokenowKtoryMaMin32Znaki"
     #    expiration: 86400000 # 1 day
     expiration: 900000    # 15 min
+
+auth:
+  oauth-redirect-uri: "https://woodworks.jsikora.uk"
