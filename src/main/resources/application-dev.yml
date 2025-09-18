@@ -46,6 +46,7 @@ spring:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
             client-secret: ${OA_DEV_GOOGLE_SECRET}
             scope: openid, profile, email
+            redirect-uri: https://woodworks-api.jsikora.uk/login/oauth2/code/google
           github:
             client-id: Ov23liZsTURzJNQnilDz
             client-secret: ${OA_DEV_GITHUB_SECRET}
