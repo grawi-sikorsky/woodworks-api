@@ -63,10 +63,10 @@ jobs:
           username: ${{ secrets.SERVER_SSH_USER }}
           password: ${{ secrets.SERVER_SSH_PASS }}
           script: |
-            docker run -d --restart unless-stopped --name woodworks-api -p 9666:9666 \
+            docker run -d --restart unless-stopped --name woodworks-api -p 9667:9667 \
               -e SPRING_PROFILES_ACTIVE=stag \
               -e DB_USER_STAG=${{ secrets.DB_USER_STAG }} \
               -e DB_PASS_STAG=${{ secrets.DB_PASS_STAG }} \
               -e OA_STAG_GITHUB_SECRET=${{ secrets.OA_STAG_GITHUB_SECRET }} \
-              -e OA_DEV_GOOGLE_SECRET=${{ secrets.OA_DEV_GOOGLE_SECRET }} \
+              -e OA_DEV_GOOGLE_SECRET=${{ secrets.OA_STAG_GOOGLE_SECRET }} \
               chodzi/woodworks-api:latest
