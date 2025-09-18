@@ -1,18 +1,16 @@
 logging:
   level:
     uk.jsikora: debug
-    org.springframework.security: DEBUG
-#    org.springframework.security.oauth2: DEBUG
 
 spring:
   config:
     activate:
-      on-profile: stag
+      on-profile: dev
 
   datasource:
-    url: jdbc:postgresql://192.168.0.6:5432/woodworks_stag
-    username: ${DB_USER_STAG}
-    password: ${DB_PASS_STAG}
+    url: jdbc:postgresql://192.168.0.6:5432/woodworks
+    username: ${DB_USER_PROD}
+    password: ${DB_PASS_PROD}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -44,12 +42,12 @@ spring:
         registration:
           google:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
-            client-secret: ${OA_STAG_GOOGLE_SECRET}
+            client-secret: ${OA_PROD_GOOGLE_SECRET}
             scope: openid, profile, email
-            redirect-uri: https://stag.woodworks-api.jsikora.uk/login/oauth2/code/google
+            redirect-uri: https://woodworks-api.jsikora.uk/login/oauth2/code/google
           github:
-            client-id: Ov23lik9cjhHMKAav4EJ
-            client-secret: ${OA_STAG_GITHUB_SECRET}
+            client-id: Ov23liZsTURzJNQnilDz
+            client-secret: ${OA_PROD_GITHUB_SECRET}
             scope: read:user, user:email
         provider:
           google:
@@ -58,8 +56,8 @@ spring:
 woodworks:
   jwt:
     secret: "superTajnyKluczDoJWTtokenowKtoryMaMin32Znaki"
-    #    expiration: 86400000 # 1 day
+#    expiration: 86400000 # 1 day
     expiration: 900000    # 15 min
 
 auth:
-  oauth-redirect-uri: "https://stag.woodworks.jsikora.uk"
+  oauth-redirect-uri: "https://woodworks.jsikora.uk"

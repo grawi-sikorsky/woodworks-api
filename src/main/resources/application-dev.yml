@@ -10,7 +10,7 @@ spring:
       on-profile: dev
 
   datasource:
-    url: jdbc:postgresql://192.168.0.6:5432/woodworks
+    url: jdbc:postgresql://192.168.0.6:5432/woodworks_dev
     username: ${DB_USER}
     password: ${DB_PASS}
 
@@ -46,7 +46,7 @@ spring:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
             client-secret: ${OA_DEV_GOOGLE_SECRET}
             scope: openid, profile, email
-            redirect-uri: https://woodworks-api.jsikora.uk/login/oauth2/code/google
+            redirect-uri: http://localhost:9666/login/oauth2/code/google # to musi sie zgadzac z googleapi
           github:
             client-id: Ov23liZsTURzJNQnilDz
             client-secret: ${OA_DEV_GITHUB_SECRET}
