@@ -52,6 +52,8 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of("http://localhost:4200"));
         config.setAllowedOrigins(List.of("https://woodworks.jsikora.uk"));
         config.setAllowedOrigins(List.of("http://woodworks.jsikora.uk"));
+        config.setAllowedOrigins(List.of("https://stag-woodworks.jsikora.uk"));
+        config.setAllowedOrigins(List.of("http://stag-woodworks.jsikora.uk"));
         config.setAllowedOrigins(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(List.of("*"));

@@ -49,7 +49,7 @@ spring:
             client-id: 1060834102689-amgsfr2qu0adpkp1bl7jlbdl6v9os7nn.apps.googleusercontent.com
             client-secret: ${OA_STAG_GOOGLE_SECRET}
             scope: openid, profile, email
-            redirect-uri: https://stag.woodworks-api.jsikora.uk/login/oauth2/code/google
+            redirect-uri: https://stag-woodworks-api.jsikora.uk/login/oauth2/code/google
           github:
             client-id: Ov23lik9cjhHMKAav4EJ
             client-secret: ${OA_STAG_GITHUB_SECRET}
@@ -65,4 +65,4 @@ woodworks:
     expiration: 900000    # 15 min
 
 auth:
-  oauth-redirect-uri: "https://stag.woodworks.jsikora.uk"
+  oauth-redirect-uri: "https://stag-woodworks.jsikora.uk"
