@@ -90,7 +90,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String token = jwtService.generateToken(baseUser, extraClaims);
 
-        String redirectUrl = UriComponentsBuilder.fromUriString(authProperties.getOauthRedirectUri() + "/oauth2/redirect")
+        String redirectUrl = UriComponentsBuilder.fromUriString(authProperties.getOauthRedirectUri() + "authentication/oauth2/redirect")
                                                  .queryParam("token", token)
                                                  .build()
                                                  .toUriString();
