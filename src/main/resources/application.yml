@@ -35,3 +35,6 @@ spring:
     enabled: true
     baseline-on-migrate: true
     table: flyway_schema_history
+
+server:
+  forward-headers-strategy: NATIVE
