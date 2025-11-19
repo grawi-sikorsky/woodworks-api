@@ -66,8 +66,24 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-        // Opcjonalnie: np. wygaszenie sesji, usunięcie ciasteczek
+        // Clear Spring Security context
         SecurityContextHolder.clearContext();
-        return ResponseEntity.ok(Map.of("message", "Logged out"));
+        
+        // Invalidate HTTP session if it exists
+        if (request.getSession(false) != null) {
+            request.getSession().invalidate();
+        }
+        
+        // Clear all cookies
+        if (request.getCookies() != null) {
+            for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+        
+        return ResponseEntity.ok(Map.of("message", "Logged out successfully"));
     }
 }
