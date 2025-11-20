@@ -9,7 +9,8 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                int height,
                                int depth,
                                int thickness,
-                               int cabinCount) {
+                               int cabinCount,
+                               List<Integer> drawerHeights) {
     }
 
 
