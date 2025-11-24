@@ -54,7 +54,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:4200", "https://woodworks.jsikora.uk", "http://woodworks.jsikora.uk", "https://stag-woodworks.jsikora.uk", "http://stag-woodworks.jsikora.uk"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("Authorization","Content-Type","X-Requested-With"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

@@ -39,10 +39,20 @@ public class KitchenDraftController {
     }
 
     @GetMapping
-    public ResponseEntity<List<KitchenDraftDto>> getUserDrafts(Authentication authentication) {
+    public ResponseEntity<List<uk.jsikora.woodworksapi.dto.KitchenDraftSummaryDto>> getUserDrafts(Authentication authentication) {
         Long userId = getUserId(authentication);
-        List<KitchenDraftDto> drafts = service.getUserDrafts(userId);
+        List<uk.jsikora.woodworksapi.dto.KitchenDraftSummaryDto> drafts = service.getUserDraftSummaries(userId);
         return ResponseEntity.ok(drafts);
+    }
+
+    @PatchMapping("/{uuid}/name")
+    public ResponseEntity<Void> renameDraft(
+            @PathVariable UUID uuid,
+            @RequestBody String newName,
+            Authentication authentication) {
+        Long userId = getUserId(authentication);
+        service.renameDraft(userId, uuid, newName);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{uuid}")

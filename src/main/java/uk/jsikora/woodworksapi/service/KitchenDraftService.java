@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.jsikora.woodworksapi.dto.KitchenDraftDto;
+import uk.jsikora.woodworksapi.dto.KitchenDraftSummaryDto;
 import uk.jsikora.woodworksapi.dto.SaveKitchenDraftRequest;
 import uk.jsikora.woodworksapi.entity.KitchenDraft;
 import uk.jsikora.woodworksapi.repository.KitchenDraftRepository;
@@ -54,11 +55,19 @@ public class KitchenDraftService {
         return toDto(draft);
     }
 
+    @Transactional
+    public void renameDraft(Long userId, UUID uuid, String newName) {
+        KitchenDraft draft = repository.findByUuidAndUserId(uuid, userId)
+                .orElseThrow(() -> new RuntimeException("Draft not found"));
+        draft.setName(newName);
+        repository.save(draft);
+    }
+
     @Transactional(readOnly = true)
-    public List<KitchenDraftDto> getUserDrafts(Long userId) {
+    public List<KitchenDraftSummaryDto> getUserDraftSummaries(Long userId) {
         return repository.findByUserIdOrderByUpdatedAtDesc(userId)
                 .stream()
-                .map(this::toDto)
+                .map(this::toSummaryDto)
                 .collect(Collectors.toList());
     }
 
@@ -88,5 +97,14 @@ public class KitchenDraftService {
         }
         
         return dto;
+    }
+
+    private KitchenDraftSummaryDto toSummaryDto(KitchenDraft draft) {
+        return new KitchenDraftSummaryDto(
+            draft.getUuid(),
+            draft.getName(),
+            draft.getCreatedAt(),
+            draft.getUpdatedAt()
+        );
     }
 }
