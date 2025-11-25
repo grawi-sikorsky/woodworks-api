@@ -14,8 +14,13 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                Integer doorCount,
                                Boolean hasOvenDrawer,
                                Integer baseboardHeight,
-                               String cabinetName) {
+                               String cabinetName,
+                               ColorConfig colors) {
     }
 
-
+    public record ColorConfig(String corpusColor,
+                              String frontColor,
+                              String drawerInteriorColor,
+                              String hdfColor) {
+    }
 }
