@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class WorkResponse {
     private String status;
-    private List<Item> itemList;
+    private List<CabinetGroup> cabinetGroups;
 }

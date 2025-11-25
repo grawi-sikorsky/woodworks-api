@@ -46,4 +46,36 @@ public class UserServiceImpl implements UserService {
                                               return userRepository.save(newBaseUser);
                                           });
     }
+
+    @Override
+    public Optional<BaseUser> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
+    @Override
+    public void incrementGenerationCount(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setGenerationRequestCount(user.getGenerationRequestCount() + 1);
+            userRepository.save(user);
+        });
+    }
+
+    @Override
+    public void incrementProjectCount(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setProjectCount(user.getProjectCount() + 1);
+            userRepository.save(user);
+        });
+    }
+
+    @Override
+    public void decrementProjectCount(Long userId) {
+        userRepository.findById(userId).ifPresent(user -> {
+            if (user.getProjectCount() > 0) {
+                user.setProjectCount(user.getProjectCount() - 1);
+                userRepository.save(user);
+            }
+        });
+    }
 }

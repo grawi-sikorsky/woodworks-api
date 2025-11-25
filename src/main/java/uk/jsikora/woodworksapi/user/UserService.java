@@ -9,4 +9,9 @@ public interface UserService {
     Optional<BaseUser> findByEmailAndProvider(String email, AuthProvider provider);
     Optional<BaseUser> findByProviderAndProviderId(AuthProvider provider, String providerId);
     BaseUser registerOAuthUser(BaseUser baseUser);
+    Optional<BaseUser> findById(Long id);
+    
+    void incrementGenerationCount(Long userId);
+    void incrementProjectCount(Long userId);
+    void decrementProjectCount(Long userId);
 }
