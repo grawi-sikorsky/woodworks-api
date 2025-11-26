@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import uk.jsikora.woodworksapi.workService.CabinCuttingStrategy;
 import uk.jsikora.woodworksapi.workService.CabinType;
+import uk.jsikora.woodworksapi.workService.DrawerSystem;
 import uk.jsikora.woodworksapi.workService.Item;
 import uk.jsikora.woodworksapi.workService.ItemUtils;
 import uk.jsikora.woodworksapi.workService.WorkRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static uk.jsikora.woodworksapi.workService.MaterialType.HDF;
 import static uk.jsikora.woodworksapi.workService.MaterialType.PLYTA_MEBLOWA;
@@ -37,6 +37,9 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         int depth = cabinRequest.depth();
         int count = cabinRequest.cabinCount();
         List<Integer> drawerHeights = cabinRequest.drawerHeights();
+        DrawerSystem drawerSystem = cabinRequest.drawerSystem();
+        
+        log.info("Generating drawers cabin items. System: {}", drawerSystem);
 
         int innerWidth = width - 2 * thickness;
 
