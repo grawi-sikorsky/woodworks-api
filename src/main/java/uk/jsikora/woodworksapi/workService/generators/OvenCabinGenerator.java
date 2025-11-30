@@ -73,7 +73,7 @@ public class OvenCabinGenerator implements CabinCuttingStrategy {
             // Drawer Box (simplified)
             int drawerBoxHeight = Math.max(80, drawerHeight - 40);
             items.add(new Item("[Szuflada] Plecy", innerWidth - 26 - 2 * thickness, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
-            items.add(new Item("[Szuflada] Dno", innerWidth - 26, depth - 10, 3, 1, HDF));
+            items.add(new Item("[Szuflada] Dno", innerWidth - 26, depth - 10, thickness, 1, PLYTA_MEBLOWA));
         } else {
             // Just a shelf at bottom or filler?
             // Usually a filler panel at bottom if no drawer.
