@@ -36,8 +36,6 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         int height = cabinRequest.height();
         int depth = cabinRequest.depth();
         int count = cabinRequest.cabinCount();
-        List<Integer> drawerHeights = cabinRequest.drawerHeights();
-        List<Integer> drawerDepths = cabinRequest.drawerDepths();
         DrawerSystem drawerSystem = cabinRequest.drawerSystem();
         
         log.info("Generating drawers cabin items. System: {}", drawerSystem);
@@ -61,43 +59,41 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         // Plecy
         items.add(new Item("Plecy", width - 2, height - 2, 3, 1, HDF));
 
+        // Get drawers configuration
+        List<WorkRequest.DrawerConfig> drawers = cabinRequest.drawers();
+        if (drawers == null || drawers.isEmpty()) {
+            log.warn("No drawers configuration provided for DRAWERS cabinet");
+            return items;
+        }
+
         // Drawers
-        if (drawerHeights != null) {
-            for (int i = 0; i < drawerHeights.size(); i++) {
-                int drawerFrontHeight = drawerHeights.get(i);
-                // Adjust for gaps? The heights from frontend usually sum up to total height.
-                // We need to subtract gaps to get actual front height.
-                // Or assume frontend sends exact front heights?
-                // Frontend sends: (h / totalHeight) * cabinet.height.
-                // So they sum up to cabinet height.
-                // We should subtract gap.
-                int actualFrontHeight = drawerFrontHeight - DRAWER_GAP;
+        for (int i = 0; i < drawers.size(); i++) {
+            WorkRequest.DrawerConfig drawer = drawers.get(i);
+            int drawerFrontHeight = drawer.height();
+            // Adjust for gaps? The heights from frontend usually sum up to total height.
+            // We need to subtract gaps to get actual front height.
+            // Frontend sends: (h / totalHeight) * cabinet.height.
+            // So they sum up to cabinet height.
+            // We should subtract gap.
+            int actualFrontHeight = drawerFrontHeight - DRAWER_GAP;
 
-                items.add(new Item("Front szuflady " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA));
+            items.add(new Item("Front szuflady " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA));
 
-                // Drawer Box
-                // Assuming standard drawer slides (e.g. Blum Tandembox or similar need specific calculations)
-                // Simplified box:
-                // Width = innerWidth - clearance (e.g. 13mm per side for slides -> 26mm)
-                int drawerBoxWidth = innerWidth - 26;
-                
-                // Use individual drawer depth if available, otherwise fallback to default
-                int drawerBoxDepth;
-                if (drawerDepths != null && i < drawerDepths.size() && drawerDepths.get(i) != null) {
-                    drawerBoxDepth = drawerDepths.get(i);
-                } else {
-                    drawerBoxDepth = depth - 10; // Default: cabinet depth - clearance
-                }
-                
-                int drawerBoxHeight = Math.max(80, actualFrontHeight - 40); // Arbitrary box height logic
+            // Drawer Box
+            // Assuming standard drawer slides (e.g. Blum Tandembox or similar need specific calculations)
+            // Simplified box:
+            // Width = innerWidth - clearance (e.g. 13mm per side for slides -> 26mm)
+            int drawerBoxWidth = innerWidth - 26;
+            
+            int drawerBoxDepth = drawer.depth();
+            int drawerBoxHeight = Math.max(80, actualFrontHeight - 40); // Arbitrary box height logic
 
-                // Box sides
-                items.add(new Item("Bok szuflady " + (i + 1), drawerBoxDepth, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
-                // Box front/back
-                items.add(new Item("Przód/Tył szuflady " + (i + 1), drawerBoxWidth - 2 * thickness, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
-                // Box bottom
-                items.add(new Item("Dno szuflady " + (i + 1), drawerBoxWidth, drawerBoxDepth, 3, 1, HDF));
-            }
+            // Box sides
+            items.add(new Item("Bok szuflady " + (i + 1), drawerBoxDepth, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
+            // Box front/back
+            items.add(new Item("Przód/Tył szuflady " + (i + 1), drawerBoxWidth - 2 * thickness, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
+            // Box bottom
+            items.add(new Item("Dno szuflady " + (i + 1), drawerBoxWidth, drawerBoxDepth, 3, 1, HDF));
         }
 
         return ItemUtils.aggregateItems(items);

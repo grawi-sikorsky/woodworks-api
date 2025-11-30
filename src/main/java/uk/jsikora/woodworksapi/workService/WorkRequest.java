@@ -10,8 +10,7 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                int depth,
                                int thickness,
                                int cabinCount,
-                               List<Integer> drawerHeights,
-                               List<Integer> drawerDepths,
+                               List<DrawerConfig> drawers,
                                Integer doorCount,
                                Boolean hasOvenDrawer,
                                Integer baseboardHeight,
@@ -19,6 +18,8 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                ColorConfig colors,
                                DrawerSystem drawerSystem) {
     }
+
+    public record DrawerConfig(int height, int depth) {}
 
     public record ColorConfig(String corpusColor,
                               String frontColor,
