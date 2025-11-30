@@ -96,6 +96,45 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             items.add(new Item("Dno szuflady " + (i + 1), drawerBoxWidth, drawerBoxDepth, 3, 1, HDF));
         }
 
+        addPlinthDrawer(items, cabinRequest, width, depth, thickness);
+
         return ItemUtils.aggregateItems(items);
+    }
+
+    private void addPlinthDrawer(List<Item> items, WorkRequest.CabinRequest cabinRequest, int width, int depth, int thickness) {
+        if (!Boolean.TRUE.equals(cabinRequest.plinthDrawer())) {
+            return;
+        }
+
+        int baseboardHeight = cabinRequest.baseboardHeight() != null ? cabinRequest.baseboardHeight() : 100;
+        int legDiameter = cabinRequest.legDiameter() != null ? cabinRequest.legDiameter() : 60;
+        
+        // Calculate dynamic drawer width (same logic as frontend)
+        int availableWidth = width - (2 * legDiameter);
+        int minClearance = 10;
+        int maxPossibleWidth = availableWidth - minClearance;
+        // Round down to nearest 50mm
+        int drawerWidth = (int) (Math.floor(maxPossibleWidth / 50.0) * 50);
+
+        if (drawerWidth < 300) {
+            log.warn("Not enough space for plinth drawer. Width: {}, Leg: {}, Calc: {}", width, legDiameter, drawerWidth);
+            return;
+        }
+
+        // Front panel
+        int frontHeight = baseboardHeight - 4;
+        items.add(new Item("Front szuflady cokołowej", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA));
+
+        // Drawer Box
+        int boxDepth = Math.min(400, depth - 100);
+        int boxHeight = Math.min(60, frontHeight - 20);
+        
+        // Box sides
+        items.add(new Item("Bok szuflady cokołowej", boxDepth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        // Box front/back (internal)
+        int internalFrontWidth = drawerWidth - (2 * thickness);
+        items.add(new Item("Przód/Tył szuflady cokołowej", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        // Box bottom
+        items.add(new Item("Dno szuflady cokołowej", drawerWidth, boxDepth, 3, 1, HDF));
     }
 }
