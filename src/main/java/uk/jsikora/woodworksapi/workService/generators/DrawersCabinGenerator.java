@@ -37,6 +37,7 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         int depth = cabinRequest.depth();
         int count = cabinRequest.cabinCount();
         List<Integer> drawerHeights = cabinRequest.drawerHeights();
+        List<Integer> drawerDepths = cabinRequest.drawerDepths();
         DrawerSystem drawerSystem = cabinRequest.drawerSystem();
         
         log.info("Generating drawers cabin items. System: {}", drawerSystem);
@@ -79,7 +80,15 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
                 // Simplified box:
                 // Width = innerWidth - clearance (e.g. 13mm per side for slides -> 26mm)
                 int drawerBoxWidth = innerWidth - 26;
-                int drawerBoxDepth = depth - 10; // Clearance at back
+                
+                // Use individual drawer depth if available, otherwise fallback to default
+                int drawerBoxDepth;
+                if (drawerDepths != null && i < drawerDepths.size() && drawerDepths.get(i) != null) {
+                    drawerBoxDepth = drawerDepths.get(i);
+                } else {
+                    drawerBoxDepth = depth - 10; // Default: cabinet depth - clearance
+                }
+                
                 int drawerBoxHeight = Math.max(80, actualFrontHeight - 40); // Arbitrary box height logic
 
                 // Box sides

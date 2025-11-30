@@ -11,6 +11,7 @@ public record WorkRequest(int workType, List<CabinRequest> cabins) {
                                int thickness,
                                int cabinCount,
                                List<Integer> drawerHeights,
+                               List<Integer> drawerDepths,
                                Integer doorCount,
                                Boolean hasOvenDrawer,
                                Integer baseboardHeight,
