@@ -110,7 +110,10 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         int legDiameter = cabinRequest.legDiameter() != null ? cabinRequest.legDiameter() : 60;
         
         // Calculate dynamic drawer width (same logic as frontend)
-        int availableWidth = width - (2 * legDiameter);
+        // Legs are flush with edge (inset = radius)
+        // Space taken by one leg = diameter
+        double legSpacePerSide = legDiameter;
+        int availableWidth = width - (int)(2 * legSpacePerSide);
         int minClearance = 10;
         int maxPossibleWidth = availableWidth - minClearance;
         // Round down to nearest 50mm
