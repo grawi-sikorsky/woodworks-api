@@ -136,11 +136,9 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         int boxDepth = Math.min(400, depth - 100);
         int boxHeight = Math.min(60, frontHeight - 20);
         
-        // Box sides
-        items.add(new Item("[Szuflada cokołowa] Bok", boxDepth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
         // Box front/back (internal)
         int internalFrontWidth = drawerWidth - (2 * thickness);
-        items.add(new Item("[Szuflada cokołowa] Przód/Tył", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Plecy", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
         // Box bottom
         items.add(new Item("[Szuflada cokołowa] Dno", drawerWidth, boxDepth, 3, 1, HDF));
     }
