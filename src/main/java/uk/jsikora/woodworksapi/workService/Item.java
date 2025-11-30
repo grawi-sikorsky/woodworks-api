@@ -1,5 +1,7 @@
 package uk.jsikora.woodworksapi.workService;
 
+import uk.jsikora.woodworksapi.workService.generators.ItemType;
+
 /**
  *
  * @param name
@@ -7,5 +9,6 @@ package uk.jsikora.woodworksapi.workService;
  * @param height
  * @param thickness
  * @param material
+ * @param type
  */
-public record Item(String name, int width, int height, int thickness, int count, MaterialType material) {}
+public record Item(String name, int width, int height, int thickness, int count, MaterialType material, ItemType type) {}

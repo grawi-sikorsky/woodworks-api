@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import static uk.jsikora.woodworksapi.workService.MaterialType.HDF;
 import static uk.jsikora.woodworksapi.workService.MaterialType.PLYTA_MEBLOWA;
+import static uk.jsikora.woodworksapi.workService.generators.ItemType.*;
 
 @Slf4j
 @Component
@@ -52,26 +53,27 @@ public class DoorsCabinGenerator implements CabinCuttingStrategy {
         List<Item> items = new ArrayList<>();
 
         // Boki
-        items.add(new Item("[Korpus] Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("[Korpus] Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
+        // Boki
+        items.add(new Item("[Korpus] Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA, CORPUS));
+        items.add(new Item("[Korpus] Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Spód
-        items.add(new Item("[Korpus] Wieniec", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Belka górna (front and back or just one?)
         // Standard kitchen cabinet has 2 top beams usually.
-        items.add(new Item("[Korpus] Wieniec górny (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("[Korpus] Wieniec górny (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec górny (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA, CORPUS));
+        items.add(new Item("[Korpus] Wieniec górny (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Plecy (HDF)
         // Usually inserted into grooves or nailed on back.
         // Assuming nailed on back for simplicity or standard groove size.
         // Let's assume full size minus some offset if groove, or full size - 2mm.
         // Old generator: width, height, 3, 1, HDF.
-        items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF));
+        items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF, ItemType.HDF));
 
         // Półka (optional, but standard usually has 1)
-        items.add(new Item("[Korpus] Półka", innerWidth - 2, depth - 20, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Półka", innerWidth - 2, depth - 20, thickness, 1, PLYTA_MEBLOWA, SHELF));
 
         // Fronts
         int frontHeight = height - FRONT_CLEARANCE;
@@ -80,10 +82,10 @@ public class DoorsCabinGenerator implements CabinCuttingStrategy {
             // Usually gap in middle is small.
             // Let's say (width - 4 - 2) / 2 ?
             // Let's simplify: (width - 4) / 2
-            items.add(new Item("[Korpus] Front (lewy)", singleDoorWidth, frontHeight, thickness, 1, PLYTA_MEBLOWA));
-            items.add(new Item("[Korpus] Front (prawy)", singleDoorWidth, frontHeight, thickness, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Korpus] Front (lewy)", singleDoorWidth, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
+            items.add(new Item("[Korpus] Front (prawy)", singleDoorWidth, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
         } else {
-            items.add(new Item("[Korpus] Front", width - FRONT_CLEARANCE, frontHeight, thickness, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Korpus] Front", width - FRONT_CLEARANCE, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
         }
 
         return ItemUtils.aggregateItems(items);

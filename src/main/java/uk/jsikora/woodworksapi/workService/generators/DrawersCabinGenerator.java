@@ -14,6 +14,7 @@ import java.util.List;
 
 import static uk.jsikora.woodworksapi.workService.MaterialType.HDF;
 import static uk.jsikora.woodworksapi.workService.MaterialType.PLYTA_MEBLOWA;
+import static uk.jsikora.woodworksapi.workService.generators.ItemType.*;
 
 @Slf4j
 @Component
@@ -46,18 +47,18 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
 
         // Carcass
         // Boki
-        items.add(new Item("[Korpus] Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("[Korpus] Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA, CORPUS));
+        items.add(new Item("[Korpus] Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Spód
-        items.add(new Item("[Korpus] Wieniec dolny", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec dolny", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Belki górne
-        items.add(new Item("[Korpus] Wieniec górny (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("[Korpus] Wieniec górny (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec górny (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA, CORPUS));
+        items.add(new Item("[Korpus] Wieniec górny (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA, CORPUS));
 
         // Plecy
-        items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF));
+        items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF, ItemType.HDF));
 
         // Get drawers configuration
         List<WorkRequest.DrawerConfig> drawers = cabinRequest.drawers();
@@ -77,7 +78,7 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             // We should subtract gap.
             int actualFrontHeight = drawerFrontHeight - DRAWER_GAP;
 
-            items.add(new Item("[Szuflada] Front " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Szuflada] Front " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
 
             // Drawer Box
             // Assuming standard drawer slides (e.g. Blum Tandembox or similar need specific calculations)
@@ -93,11 +94,11 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             
             // Box back (only back needed for system drawers)
             // Thickness 16mm
-            items.add(new Item("[Szuflada] Plecy " + (i + 1), drawerBoxWidth - 2 * 16, drawerBoxHeight, 16, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Szuflada] Plecy " + (i + 1), drawerBoxWidth - 2 * 16, drawerBoxHeight, 16, 1, PLYTA_MEBLOWA, DRAWER_BOX));
             
             // Box bottom
             // Thickness 16mm
-            items.add(new Item("[Szuflada] Dno " + (i + 1), drawerBoxWidth, drawerBoxDepth, 16, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Szuflada] Dno " + (i + 1), drawerBoxWidth, drawerBoxDepth, 16, 1, PLYTA_MEBLOWA, DRAWER_BOTTOM));
         }
 
         addPlinthDrawer(items, cabinRequest, width, depth, thickness);
@@ -130,7 +131,7 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
 
         // Front panel
         int frontHeight = baseboardHeight - 4;
-        items.add(new Item("[Szuflada cokołowa] Front", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Front", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
 
         // Drawer Box
         int boxDepth = Math.min(400, depth - 100);
@@ -138,8 +139,8 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
         
         // Box front/back (internal)
         int internalFrontWidth = drawerWidth - (2 * thickness);
-        items.add(new Item("[Szuflada cokołowa] Plecy", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Plecy", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA, DRAWER_BOX));
         // Box bottom
-        items.add(new Item("[Szuflada cokołowa] Dno", drawerWidth, boxDepth, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Dno", drawerWidth, boxDepth, thickness, 1, PLYTA_MEBLOWA, DRAWER_BOTTOM));
     }
 }
