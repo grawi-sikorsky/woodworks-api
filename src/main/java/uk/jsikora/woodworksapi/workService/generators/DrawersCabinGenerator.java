@@ -46,18 +46,18 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
 
         // Carcass
         // Boki
-        items.add(new Item("Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Bok (lewy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Bok (prawy)", depth, height, thickness, 1, PLYTA_MEBLOWA));
 
         // Spód
-        items.add(new Item("Spód", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec dolny", innerWidth, depth, thickness, 1, PLYTA_MEBLOWA));
 
         // Belki górne
-        items.add(new Item("Belka górna (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
-        items.add(new Item("Belka górna (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec górny (przód)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Korpus] Wieniec górny (tył)", innerWidth, TOP_BEAM_HEIGHT, thickness, 1, PLYTA_MEBLOWA));
 
         // Plecy
-        items.add(new Item("Plecy", width - 2, height - 2, 3, 1, HDF));
+        items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF));
 
         // Get drawers configuration
         List<WorkRequest.DrawerConfig> drawers = cabinRequest.drawers();
@@ -77,7 +77,7 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             // We should subtract gap.
             int actualFrontHeight = drawerFrontHeight - DRAWER_GAP;
 
-            items.add(new Item("Front szuflady " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA));
+            items.add(new Item("[Szuflada] Front " + (i + 1), width - FRONT_CLEARANCE, actualFrontHeight, thickness, 1, PLYTA_MEBLOWA));
 
             // Drawer Box
             // Assuming standard drawer slides (e.g. Blum Tandembox or similar need specific calculations)
@@ -88,12 +88,16 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             int drawerBoxDepth = drawer.depth();
             int drawerBoxHeight = Math.max(80, actualFrontHeight - 40); // Arbitrary box height logic
 
-            // Box sides
-            items.add(new Item("Bok szuflady " + (i + 1), drawerBoxDepth, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
-            // Box front/back
-            items.add(new Item("Przód/Tył szuflady " + (i + 1), drawerBoxWidth - 2 * thickness, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
+            // Box sides - REMOVED as per request (bought accessory)
+            // items.add(new Item("Bok szuflady " + (i + 1), drawerBoxDepth, drawerBoxHeight, thickness, 2, PLYTA_MEBLOWA));
+            
+            // Box back (only back needed for system drawers)
+            // Thickness 16mm
+            items.add(new Item("[Szuflada] Plecy " + (i + 1), drawerBoxWidth - 2 * 16, drawerBoxHeight, 16, 1, PLYTA_MEBLOWA));
+            
             // Box bottom
-            items.add(new Item("Dno szuflady " + (i + 1), drawerBoxWidth, drawerBoxDepth, 3, 1, HDF));
+            // Thickness 16mm
+            items.add(new Item("[Szuflada] Dno " + (i + 1), drawerBoxWidth, drawerBoxDepth, 16, 1, PLYTA_MEBLOWA));
         }
 
         addPlinthDrawer(items, cabinRequest, width, depth, thickness);
@@ -126,18 +130,18 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
 
         // Front panel
         int frontHeight = baseboardHeight - 4;
-        items.add(new Item("Front szuflady cokołowej", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Front", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA));
 
         // Drawer Box
         int boxDepth = Math.min(400, depth - 100);
         int boxHeight = Math.min(60, frontHeight - 20);
         
         // Box sides
-        items.add(new Item("Bok szuflady cokołowej", boxDepth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Bok", boxDepth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
         // Box front/back (internal)
         int internalFrontWidth = drawerWidth - (2 * thickness);
-        items.add(new Item("Przód/Tył szuflady cokołowej", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
+        items.add(new Item("[Szuflada cokołowa] Przód/Tył", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA));
         // Box bottom
-        items.add(new Item("Dno szuflady cokołowej", drawerWidth, boxDepth, 3, 1, HDF));
+        items.add(new Item("[Szuflada cokołowa] Dno", drawerWidth, boxDepth, 3, 1, HDF));
     }
 }
