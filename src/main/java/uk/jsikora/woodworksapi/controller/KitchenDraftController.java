@@ -24,13 +24,7 @@ public class KitchenDraftController {
     private final KitchenDraftService service;
     private final uk.jsikora.woodworksapi.user.UserService userService;
 
-    /**
-     * Creates a new kitchen draft for the authenticated user.
-     * 
-     * @param request the draft data including name and cabinet configurations
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity containing the created draft with UUID
-     */
+    /** Creates a new kitchen draft. */
     @PostMapping
     public ResponseEntity<KitchenDraftDto> saveDraft(
             @RequestBody SaveKitchenDraftRequest request,
@@ -40,14 +34,7 @@ public class KitchenDraftController {
         return ResponseEntity.ok(draft);
     }
 
-    /**
-     * Updates an existing kitchen draft.
-     * 
-     * @param uuid the UUID of the draft to update
-     * @param request the updated draft data
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity containing the updated draft
-     */
+    /** Updates an existing kitchen draft. */
     @PutMapping("/{uuid}")
     public ResponseEntity<KitchenDraftDto> updateDraft(
             @PathVariable UUID uuid,
@@ -58,12 +45,7 @@ public class KitchenDraftController {
         return ResponseEntity.ok(draft);
     }
 
-    /**
-     * Retrieves all draft summaries for the authenticated user.
-     * 
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity containing list of draft summaries
-     */
+    /** Retrieves all draft summaries for the authenticated user. */
     @GetMapping
     public ResponseEntity<List<KitchenDraftSummaryDto>> getUserDrafts(Authentication authentication) {
         Long userId = getUserId(authentication);
@@ -71,14 +53,7 @@ public class KitchenDraftController {
         return ResponseEntity.ok(drafts);
     }
 
-    /**
-     * Renames an existing kitchen draft.
-     * 
-     * @param uuid the UUID of the draft to rename
-     * @param newName the new name for the draft
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity with no content
-     */
+    /** Renames an existing kitchen draft. */
     @PatchMapping("/{uuid}/name")
     public ResponseEntity<Void> renameDraft(
             @PathVariable UUID uuid,
@@ -89,13 +64,7 @@ public class KitchenDraftController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     * Retrieves a specific kitchen draft by UUID.
-     * 
-     * @param uuid the UUID of the draft to retrieve
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity containing the full draft data
-     */
+    /** Retrieves a specific kitchen draft by UUID. */
     @GetMapping("/{uuid}")
     public ResponseEntity<KitchenDraftDto> getDraft(
             @PathVariable UUID uuid,
@@ -105,13 +74,7 @@ public class KitchenDraftController {
         return ResponseEntity.ok(draft);
     }
 
-    /**
-     * Deletes a kitchen draft.
-     * 
-     * @param uuid the UUID of the draft to delete
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity with no content
-     */
+    /** Deletes a kitchen draft. */
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteDraft(
             @PathVariable UUID uuid,
@@ -121,14 +84,7 @@ public class KitchenDraftController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Extracts the user ID from the authentication context.
-     * Supports both BaseUser and OAuth2User principal types.
-     * 
-     * @param authentication the authentication context
-     * @return the user's ID
-     * @throws RuntimeException if user is not authenticated, not found, or authentication type is unsupported
-     */
+    /** Extracts user ID from authentication context. */
     private Long getUserId(Authentication authentication) {
         if (authentication == null) {
             throw new RuntimeException("User not authenticated");

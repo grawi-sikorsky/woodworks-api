@@ -5,10 +5,7 @@ import uk.jsikora.woodworksapi.auth.AuthProvider;
 
 import java.util.Optional;
 
-/**
- * Implementation of UserService for managing user operations.
- * Handles user lookup, OAuth registration, and usage counter management.
- */
+/** Implementation of UserService for user operations and OAuth registration. */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -18,33 +15,21 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Optional<BaseUser> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Optional<BaseUser> findByEmailAndProvider(String email, AuthProvider provider) {
         return userRepository.findByEmailAndProvider(email, provider);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Optional<BaseUser> findByProviderAndProviderId(AuthProvider provider, String providerId) {
         return userRepository.findByProviderAndProviderId(provider, providerId);
     }
 
-    /**
-     * {@inheritDoc}
-     * Creates a new user if one doesn't exist for the given email and provider combination.
-     */
+    /** Creates new user if doesn't exist for given email and provider. */
     @Override
     public BaseUser registerOAuthUser(BaseUser baseUser) {
         if (userRepository.existsByEmailAndProvider(baseUser.getEmail(), baseUser.getProvider())) {
@@ -64,17 +49,11 @@ public class UserServiceImpl implements UserService {
                                           });
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Optional<BaseUser> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void incrementGenerationCount(Long userId) {
         userRepository.findById(userId).ifPresent(user -> {
@@ -83,9 +62,6 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void incrementProjectCount(Long userId) {
         userRepository.findById(userId).ifPresent(user -> {
@@ -94,10 +70,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    /**
-     * {@inheritDoc}
-     * Only decrements if the current count is greater than zero.
-     */
+    /** Decrements project count only if current count > 0. */
     @Override
     public void decrementProjectCount(Long userId) {
         userRepository.findById(userId).ifPresent(user -> {

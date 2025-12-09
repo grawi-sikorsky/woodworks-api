@@ -24,24 +24,13 @@ public class OvenCabinGenerator implements CabinCuttingStrategy {
     private static final int OVEN_HEIGHT = 595; // Standard oven height
     private static final int DRAWER_GAP = 3;
 
-    /**
-     * Determines if this generator supports the given cabinet type.
-     * 
-     * @param cabinType the type of cabinet to check
-     * @return true if the cabinet type is OVEN, false otherwise
-     */
     @Override
     public boolean supports(CabinType cabinType) {
         return cabinType == CabinType.OVEN;
     }
 
     /**
-     * Generates the list of items (parts) required for an oven cabinet.
-     * Creates corpus elements (sides, beams), shelf for oven placement,
-     * optional drawer with front and box components, back panel, and plinth items.
-     * 
-     * @param cabinRequest the cabinet configuration containing dimensions, drawer settings, and other parameters
-     * @return aggregated list of items with their dimensions, materials, and quantities
+     * Generates items for an oven cabinet: corpus, shelf for oven, optional drawer, back panel, and plinth.
      */
     @Override
     public List<Item> generateItems(WorkRequest.CabinRequest cabinRequest) {

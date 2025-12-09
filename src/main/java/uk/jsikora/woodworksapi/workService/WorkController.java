@@ -19,14 +19,7 @@ public class WorkController {
     private final WorkService workService;
     private final UserService userService;
 
-    /**
-     * Generates a cut list for the provided cabinet configurations.
-     * Increments the user's generation count and delegates to WorkService for processing.
-     * 
-     * @param request the work request containing cabinet configurations
-     * @param authentication the current user's authentication context
-     * @return ResponseEntity containing the generated work response with cut list items
-     */
+    /** Generates a cut list for the provided cabinet configurations. */
     @PostMapping("/cut-list/generate")
     public ResponseEntity<WorkResponse> generateItems(@RequestBody WorkRequest request, Authentication authentication) {
         Long userId = getUserId(authentication);
@@ -34,14 +27,7 @@ public class WorkController {
         return ResponseEntity.ok(workService.generateWorkResponse(request));
     }
 
-    /**
-     * Extracts the user ID from the authentication context.
-     * Supports both BaseUser and OAuth2User principal types.
-     * 
-     * @param authentication the authentication context
-     * @return the user's ID
-     * @throws RuntimeException if user is not authenticated, not found, or authentication type is unsupported
-     */
+    /** Extracts user ID from authentication context. */
     private Long getUserId(Authentication authentication) {
         if (authentication == null) {
             throw new RuntimeException("User not authenticated");

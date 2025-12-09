@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Service for processing work requests and generating cut lists.
- * Coordinates with cabinet generators to produce item lists for each cabinet type.
+ * Uses strategy pattern to delegate item generation to appropriate cabinet generators.
  */
 @Service
 @RequiredArgsConstructor
@@ -16,13 +16,8 @@ public class WorkService {
     private final List<CabinCuttingStrategy> generators;
 
     /**
-     * Processes a work request and generates a complete work response with cut lists.
-     * For each cabinet in the request, finds the appropriate generator strategy,
-     * generates items, and groups them by cabinet.
-     * 
-     * @param request the work request containing cabinet configurations
-     * @return WorkResponse containing grouped cabinet items and status
-     * @throws IllegalArgumentException if an unsupported cabinet type is encountered
+     * Processes work request and generates complete cut list.
+     * Finds appropriate generator for each cabinet, generates items, and groups by cabinet.
      */
     public WorkResponse generateWorkResponse(WorkRequest request) {
         List<CabinetGroup> cabinetGroups = request.cabins().stream()
