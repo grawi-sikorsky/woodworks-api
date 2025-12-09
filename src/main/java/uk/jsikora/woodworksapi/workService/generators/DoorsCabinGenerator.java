@@ -88,6 +88,8 @@ public class DoorsCabinGenerator implements CabinCuttingStrategy {
             items.add(new Item("[Korpus] Front", width - FRONT_CLEARANCE, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
         }
 
+        ItemUtils.addPlinthItems(items, cabinRequest, width, depth, thickness);
+
         return ItemUtils.aggregateItems(items);
     }
 }

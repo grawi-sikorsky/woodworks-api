@@ -101,46 +101,8 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
             items.add(new Item("[Szuflada] Dno " + (i + 1), drawerBoxWidth, drawerBoxDepth, 16, 1, PLYTA_MEBLOWA, DRAWER_BOTTOM));
         }
 
-        addPlinthDrawer(items, cabinRequest, width, depth, thickness);
+        ItemUtils.addPlinthItems(items, cabinRequest, width, depth, thickness);
 
         return ItemUtils.aggregateItems(items);
-    }
-
-    private void addPlinthDrawer(List<Item> items, WorkRequest.CabinRequest cabinRequest, int width, int depth, int thickness) {
-        if (!Boolean.TRUE.equals(cabinRequest.plinthDrawer())) {
-            return;
-        }
-
-        int baseboardHeight = cabinRequest.baseboardHeight() != null ? cabinRequest.baseboardHeight() : 100;
-        int legDiameter = cabinRequest.legDiameter() != null ? cabinRequest.legDiameter() : 60;
-        
-        // Calculate dynamic drawer width (same logic as frontend)
-        // Legs are flush with edge (inset = radius)
-        // Space taken by one leg = diameter
-        double legSpacePerSide = legDiameter;
-        int availableWidth = width - (int)(2 * legSpacePerSide);
-        int minClearance = 10;
-        int maxPossibleWidth = availableWidth - minClearance;
-        // Round down to nearest 50mm
-        int drawerWidth = (int) (Math.floor(maxPossibleWidth / 50.0) * 50);
-
-        if (drawerWidth < 300) {
-            log.warn("Not enough space for plinth drawer. Width: {}, Leg: {}, Calc: {}", width, legDiameter, drawerWidth);
-            return;
-        }
-
-        // Front panel
-        int frontHeight = baseboardHeight - 4;
-        items.add(new Item("[Szuflada cokołowa] Front", width - 4, frontHeight, thickness, 1, PLYTA_MEBLOWA, FRONT));
-
-        // Drawer Box
-        int boxDepth = Math.min(400, depth - 100);
-        int boxHeight = Math.min(60, frontHeight - 20);
-        
-        // Box front/back (internal)
-        int internalFrontWidth = drawerWidth - (2 * thickness);
-        items.add(new Item("[Szuflada cokołowa] Plecy", internalFrontWidth, boxHeight, thickness, 2, PLYTA_MEBLOWA, DRAWER_BOX));
-        // Box bottom
-        items.add(new Item("[Szuflada cokołowa] Dno", drawerWidth, boxDepth, thickness, 1, PLYTA_MEBLOWA, DRAWER_BOTTOM));
     }
 }

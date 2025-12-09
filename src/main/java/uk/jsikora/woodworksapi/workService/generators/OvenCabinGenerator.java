@@ -86,6 +86,8 @@ public class OvenCabinGenerator implements CabinCuttingStrategy {
         // Let's add full back for now, user can cut.
         items.add(new Item("[Korpus] Plecy", width - 2, height - 2, 3, 1, HDF, ItemType.HDF));
 
+        ItemUtils.addPlinthItems(items, cabinRequest, width, depth, thickness);
+
         return ItemUtils.aggregateItems(items);
     }
 }
