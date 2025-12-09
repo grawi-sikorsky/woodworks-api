@@ -18,6 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * REST controller for authentication-related endpoints.
+ * Handles user authentication, token validation, and logout operations.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/auth")
@@ -31,6 +35,13 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Retrieves the current authenticated user's information.
+     * Validates the JWT token and returns user details.
+     * 
+     * @param authHeader the Authorization header containing the Bearer token
+     * @return ResponseEntity with user information or error message
+     */
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -64,6 +75,14 @@ public class AuthController {
         }
     }
 
+    /**
+     * Logs out the current user.
+     * Clears the security context, invalidates the session, and removes all cookies.
+     * 
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return ResponseEntity with success message
+     */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         // Clear Spring Security context

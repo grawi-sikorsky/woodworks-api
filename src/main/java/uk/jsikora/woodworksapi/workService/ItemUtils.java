@@ -7,6 +7,14 @@ import uk.jsikora.woodworksapi.workService.generators.ItemType;
 
 public class ItemUtils {
 
+    /**
+     * Aggregates items by grouping identical items and summing their counts.
+     * Items are considered identical if they have the same name, dimensions (width, height, thickness),
+     * material type, and item type.
+     * 
+     * @param items the list of items to aggregate
+     * @return a new list of items with aggregated counts for identical items
+     */
     public static List<Item> aggregateItems(List<Item> items) {
         return items.stream()
                     .collect(Collectors.groupingBy(item -> new ItemKey(item.name(), item.width(), item.height(), item.thickness(), item.material(), item.type()),
@@ -31,6 +39,19 @@ public class ItemUtils {
 
     private record ItemKey(String name, int width, int height, int thickness, MaterialType material, ItemType type) {}
 
+    /**
+     * Adds plinth-related items to the items list based on cabinet configuration.
+     * Generates either a standard plinth front panel or a complete plinth drawer assembly
+     * (front, back, bottom) depending on the plinthDrawer setting and available space.
+     * If plinth drawer is requested but insufficient width is available (< 300mm),
+     * falls back to a standard plinth.
+     * 
+     * @param items the list to which plinth items will be added
+     * @param cabinRequest the cabinet configuration containing plinth settings
+     * @param width the cabinet width in mm
+     * @param depth the cabinet depth in mm
+     * @param thickness the board thickness in mm
+     */
     public static void addPlinthItems(List<Item> items, WorkRequest.CabinRequest cabinRequest, int width, int depth, int thickness) {
         int baseboardHeight = cabinRequest.baseboardHeight() != null ? cabinRequest.baseboardHeight() : 0;
         
@@ -73,6 +94,17 @@ public class ItemUtils {
         }
     }
 
+    /**
+     * Adds a standard plinth front panel to the items list.
+     * Used when plinth drawer is not requested or when there is insufficient space for a drawer.
+     * 
+     * @param items the list to which the plinth front will be added
+     * @param cabinRequest the cabinet configuration
+     * @param width the cabinet width in mm
+     * @param depth the cabinet depth in mm
+     * @param thickness the board thickness in mm
+     * @param baseboardHeight the height of the plinth in mm
+     */
     private static void addStandardPlinth(List<Item> items, WorkRequest.CabinRequest cabinRequest, int width, int depth, int thickness, int baseboardHeight) {
         // Standard plinth
         // Usually just a front panel, maybe sides if returned?

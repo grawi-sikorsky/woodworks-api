@@ -23,11 +23,25 @@ public class DoorsCabinGenerator implements CabinCuttingStrategy {
     private static final int FRONT_CLEARANCE = 4;
     private static final int TOP_BEAM_HEIGHT = 100;
 
+    /**
+     * Determines if this generator supports the given cabinet type.
+     * 
+     * @param cabinType the type of cabinet to check
+     * @return true if the cabinet type is DOORS, false otherwise
+     */
     @Override
     public boolean supports(CabinType cabinType) {
         return cabinType == CabinType.DOORS;
     }
 
+    /**
+     * Generates the list of items (parts) required for a doors cabinet.
+     * Creates corpus elements (sides, beams, bottom), back panel, shelf,
+     * door fronts (single or double based on configuration), and plinth items.
+     * 
+     * @param cabinRequest the cabinet configuration containing dimensions, door count, and other parameters
+     * @return aggregated list of items with their dimensions, materials, and quantities
+     */
     @Override
     public List<Item> generateItems(WorkRequest.CabinRequest cabinRequest) {
         log.info("Generating doors cabin items.");

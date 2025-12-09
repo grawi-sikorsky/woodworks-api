@@ -24,11 +24,26 @@ public class DrawersCabinGenerator implements CabinCuttingStrategy {
     private static final int TOP_BEAM_HEIGHT = 100;
     private static final int DRAWER_GAP = 3;
 
+    /**
+     * Determines if this generator supports the given cabinet type.
+     * 
+     * @param cabinType the type of cabinet to check
+     * @return true if the cabinet type is DRAWERS, false otherwise
+     */
     @Override
     public boolean supports(CabinType cabinType) {
         return cabinType == CabinType.DRAWERS;
     }
 
+    /**
+     * Generates the list of items (parts) required for a drawers cabinet.
+     * Creates corpus elements (sides, beams, bottom), back panel, drawer fronts,
+     * drawer boxes (back and bottom only, as sides are purchased accessories),
+     * and plinth items. Processes each drawer configuration from the request.
+     * 
+     * @param cabinRequest the cabinet configuration containing dimensions, drawer configurations, and drawer system type
+     * @return aggregated list of items with their dimensions, materials, and quantities
+     */
     @Override
     public List<Item> generateItems(WorkRequest.CabinRequest cabinRequest) {
         log.info("Generating drawers cabin items.");
