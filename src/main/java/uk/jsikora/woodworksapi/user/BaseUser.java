@@ -35,6 +35,18 @@ public class BaseUser {
     private String providerId;
     private String login;
     private String locale;
+    
+    @Builder.Default
+    private Long generationRequestCount = 0L;
+    
+    @Builder.Default
+    private Integer projectCount = 0;
+    
+    @Builder.Default
+    private Integer maxProjects = 5;
+    
+    @Builder.Default
+    private Integer maxCabinetsPerProject = 10;
 
     public BaseUser() {
     }

@@ -10,6 +10,8 @@ import uk.jsikora.woodworksapi.dto.KitchenDraftSummaryDto;
 import uk.jsikora.woodworksapi.dto.SaveKitchenDraftRequest;
 import uk.jsikora.woodworksapi.entity.KitchenDraft;
 import uk.jsikora.woodworksapi.repository.KitchenDraftRepository;
+import uk.jsikora.woodworksapi.user.BaseUser;
+import uk.jsikora.woodworksapi.user.UserService;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,9 +23,21 @@ public class KitchenDraftService {
 
     private final KitchenDraftRepository repository;
     private final ObjectMapper objectMapper;
+    private final UserService userService;
 
     @Transactional
     public KitchenDraftDto saveDraft(Long userId, SaveKitchenDraftRequest request) {
+        BaseUser user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getProjectCount() >= user.getMaxProjects()) {
+            throw new RuntimeException("Przekroczono limit projektów dla Twojego konta (" + user.getMaxProjects() + ").");
+        }
+
+        if (request.getCabinets().size() > user.getMaxCabinetsPerProject()) {
+            throw new RuntimeException("Przekroczono limit szafek na projekt (" + user.getMaxCabinetsPerProject() + ").");
+        }
+
         KitchenDraft draft = new KitchenDraft();
         draft.setUserId(userId);
         draft.setName(request.getName());
@@ -35,11 +49,20 @@ public class KitchenDraftService {
         }
 
         draft = repository.save(draft);
+        userService.incrementProjectCount(userId);
+        
         return toDto(draft);
     }
 
     @Transactional
     public KitchenDraftDto updateDraft(Long userId, UUID uuid, SaveKitchenDraftRequest request) {
+        BaseUser user = userService.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (request.getCabinets().size() > user.getMaxCabinetsPerProject()) {
+            throw new RuntimeException("Przekroczono limit szafek na projekt (" + user.getMaxCabinetsPerProject() + ").");
+        }
+
         KitchenDraft draft = repository.findByUuidAndUserId(uuid, userId)
                 .orElseThrow(() -> new RuntimeException("Draft not found"));
 
@@ -81,6 +104,7 @@ public class KitchenDraftService {
     @Transactional
     public void deleteDraft(Long userId, UUID uuid) {
         repository.deleteByUuidAndUserId(uuid, userId);
+        userService.decrementProjectCount(userId);
     }
 
     private KitchenDraftDto toDto(KitchenDraft draft) {
